@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+</head>
+<body background="texture.jpg">
+
+
+<div class="pull-right">
+<a class="btn btn-primary btn-lg" href="/events/home/logout1" >Logout</a>
+</div>
+<br>
+<div id="mylist">
+ <table class="table table-striped" align="center">
+{% for l in eventslist %}
+    <tr>
+        <td>{{ l.eventid }}</td>
+    <td>{{ l.eventname }}</td>
+    <td>{{ l.description }}</td>
+    <td><a class="btn btn-success btn-lg" href="/events/home/edit/{{ l.eventid }}" >Edit</a></td>
+    <td><a class="btn btn-warning btn-lg" href="/events/home/end/{{ l.eventid }}" >End Event</a></td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+
+</div>
+{##}
+{#<div id=list">#}
+{#{% for l in list %}#}
+{##}
+{#    {{ l.eventid }}#}
+{#    {{ l.eventname }}#}
+{#    {{ l.staffid }}#}
+{#    {{ l.venue }} </br>#}
+{##}
+{#{% endfor %}#}
+{##}
+{#</div>#}
+
+
+</body>
+</html>
