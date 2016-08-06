@@ -48,7 +48,6 @@ class Feedback(models.Model):
     rating=models.IntegerField(default=0)
     event=models.ForeignKey(EventsList)
 
-# TODO: A: Update the UI.
 # TODO: A: Gropup by and count queries
 # TODO: M: dropdown.
 # TODO: Calendar API
