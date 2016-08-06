@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="facultydata">
+{% for l in facultydata %}
+    <a href="/events/home/staff/{{ l.id }}/view_events">{{ l.first_name }}</a>
+    <br>
+    {{ l.email }}
+    </br>
+    {{ l.eventslist }}
+    <br>
+    {% endfor %}
+{#    <a class="btn btn-primary btn-lg" href="www.google.com"  >Cancel</a>#}
+
+</div>
+
+</body>
+</html>

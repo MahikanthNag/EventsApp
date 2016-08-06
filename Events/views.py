@@ -23,7 +23,7 @@ from Events.forms import *
 
 def logout1(request):
     logout(request)
-    return HttpResponseRedirect("/events/home/staff/all")
+    return HttpResponseRedirect("/login/")
 
 
 # def loginPage(request):
@@ -89,6 +89,34 @@ def get_eventregistrationform(request):
         form=EventRegistrationForm()
 
     return render(request, 'registration/EventRegistration.html', {'form':form})
+
+
+
+def resourceView(request,date):
+    all_res = Resources.objects.values_list('resoure_name')
+    context = []
+    for resource in all_res:
+        obj = {}
+        obj['resource_name'] = resource
+        obj['starttime'] = "10:00"
+        obj['endtime'] = "4.30"
+        if ResourceUsage.objects.filter(date=date, resource__resource_name__iexact=resource):
+            r=ResourceUsage.objects.get(resource__resource_name__iexact=resource)
+            start = datetime.time(10, 00)
+            end = datetime.time(16, 30)
+            if(start < r.starttime):
+                pass
+
+        context.append(obj)
+    res=ResourceUsage.objects.filter(date__exact=date)
+    template = loader.get_template('HomePage.html')
+    result = template.render()
+
+
+
+
+
+
 
 
 def homepage(request):

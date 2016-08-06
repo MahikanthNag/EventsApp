@@ -19,7 +19,7 @@ from Events.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url('^',include('django.contrib.auth.urls')),
+    url('^', include('django.contrib.auth.urls')),
     url(r'^logout1/$',logout1,name="logout"),
     url(r'^events/home/',include('Events.urls')),
     url(r'^createuser/$',get_registrationform,name="registration"),

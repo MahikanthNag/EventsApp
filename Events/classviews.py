@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.http import request
 from django.http.response import HttpResponseRedirect
 from django.utils.decorators import method_decorator
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
+from django.utils import timezone
 from panda import request
 from rest_framework.urls import template_name
 
@@ -32,7 +33,7 @@ class eventslist(ListView):
     def get_queryset(self):
 
             user=self.request.user
-            return EventsList.objects.values('eventid','eventname','description')
+            return EventsList.objects.values('id','eventname','description')
 
             # return EventsList.objects.values('eventid', 'eventname', 'description')
 
@@ -47,9 +48,10 @@ class facultylist(ListView):
     template_name = 'facultylist.html'
     context_object_name = 'facultydata'
 
+
     def get_queryset(self):
 
-        return User.objects.all()
+        return User.objects.values('id', 'first_name', 'email')
 
 
 
@@ -101,3 +103,11 @@ class EventUpdate(UpdateView):
     model = EventsList
     fields = '__all__'
     template_name = 'event_update.html'
+
+class EventDetailView(DetailView):
+    model = EventsList
+    template_name = 'event_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super(EventDetailView, self).get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context

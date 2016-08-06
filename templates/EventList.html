@@ -1,56 +1,54 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title>Events in the Department</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 
 </head>
-<body background="texture.jpg">
+<body>
+    <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'facultydata' %}">View Faculty</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+    </div>
+
+    <div class="container">
+    <div class="row">
+        {% for l in eventslist %}
+        <div class="col s12 m12 l12">
+            <a href="/events/home/register_event/see/{{ l.id }}">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">{{ l.eventname }}</span>
+              <p>{{ l.description }}</p>
+            </div>
+            <div class="card-action">
+              <a href="/events/home/edit/{{ l.id }}">Edit</a>
+            </div>
+          </div>
+            </a>
+        </div>
+        {% endfor %}
+      </div>
 
 
-<div class="pull-right">
-<a class="btn btn-primary btn-lg" href="/events/home/logout1" >Logout</a>
-</div>
-<br>
-<div id="mylist">
- <table class="table table-striped" align="center">
-{% for l in eventslist %}
-    <tr>
-        <td>{{ l.eventid }}</td>
-    <td>{{ l.eventname }}</td>
-    <td>{{ l.description }}</td>
-    <td><a class="btn btn-success btn-lg" href="/events/home/edit/{{ l.eventid }}" >Edit</a></td>
-    <td><a class="btn btn-warning btn-lg" href="/events/home/end/{{ l.eventid }}" >End Event</a></td>
+    <a class="waves-effect waves-light btn" href="/events/home/register_event/">Create an event</a>
+    </div>
 
-    </tr>
-    {% endfor %}
-
-</table>
-
-</div>
-{##}
-{#<div id=list">#}
-{#{% for l in list %}#}
-{##}
-{#    {{ l.eventid }}#}
-{#    {{ l.eventname }}#}
-{#    {{ l.staffid }}#}
-{#    {{ l.venue }} </br>#}
-{##}
-{#{% endfor %}#}
-{##}
-{#</div>#}
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src={% static "js/materialize.min.js"%}></script>
 
 </body>
 </html>
