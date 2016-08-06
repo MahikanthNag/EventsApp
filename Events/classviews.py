@@ -8,7 +8,6 @@ from django.http.response import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView, DetailView
 from django.utils import timezone
-from panda import request
 from rest_framework.urls import template_name
 
 from Events.forms import UpdateEventForm

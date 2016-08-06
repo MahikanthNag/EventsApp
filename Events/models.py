@@ -16,21 +16,12 @@ class Students(models.Model):
     def __str__(self):
         return self.name
 
-# class Faculty(User):
-#     pass
-#
-#     def __str__(self):
-#         return self.name
+
 class Resources(models.Model):
-    # CSE_Lab1 = models.BooleanField(default=False)
-    # CSE_Lab2 = models.BooleanField(default=False)
-    # CSE_Lab3 = models.BooleanField(default=False)
-    # CSE_Lab4 = models.BooleanField(default=False)
-    # Visweswarayya_Conference_Hall = models.BooleanField(default=False)
-    # JC_Bose_QEEE = models.BooleanField(default=False)
-    # CC_Lab1 = models.BooleanField(default=False)
-    # CC_Lab2 = models.BooleanField(default=False)
     resource_name=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.resource_name
 
 
 class ResourceUsage(models.Model):
@@ -38,6 +29,7 @@ class ResourceUsage(models.Model):
     date = models.DateField(default=datetime.today())
     starttime = models.TimeField(blank=True)
     endtime = models.TimeField(blank=True)
+
 
 class EventsList(models.Model):
     eventid=models.CharField(max_length=20)

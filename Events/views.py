@@ -54,8 +54,8 @@ def get_registrationform(request):
         form=RegistrationForm()
 
     return render(request, 'registration/login.html', {'form':form},RequestContext(request) )
-# @method_decorator(login_required,name="dispatch")
-# class RegisterEvent:
+
+
 def get_eventregistrationform(request):
     if(request.method=='POST'):
         form=EventRegistrationForm(request.POST)
@@ -63,21 +63,13 @@ def get_eventregistrationform(request):
             eventid=form.cleaned_data['eventid']
             eventname=form.cleaned_data['eventname']
             description = form.cleaned_data['description']
-            venue = form.cleaned_data['venue']
             date=form.cleaned_data['date']
 
             # department = form.cleaned_data['department']
             # section = form.cleaned_data['section']
             starttime=form.cleaned_data['starttime']
             endtime = form.cleaned_data['endtime']
-            # cselab1= form.cleaned_data['CSE_Lab1']
-            # cselab2 = form.cleaned_data['CSE_Lab2']
-            # cselab3 = form.cleaned_data['CSE_Lab3']
-            # cselab4 = form.cleaned_data['CSE_Lab4']
-            # jcboseqeee = form.cleaned_data['JC_Bose_QEEE']
-            # visweswarayya_conference = form.cleaned_data['Visweswarayya_Conference_Hall']
-            # cclab1 = form.cleaned_data['CC_Lab1']
-            # cclab2 = form.cleaned_data['CC_Lab2']
+
             res = form.cleaned_data['venue']
             resobj = Resources.objects.get(resource_name__iexact=res)
             rusage = ResourceUsage(date=date, resource=resobj, starttime=starttime, endtime=endtime)
