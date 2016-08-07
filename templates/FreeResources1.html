@@ -6,12 +6,13 @@
 </head>
 <body>
 <div>
+{#{{ obj }}#}
  {% for o in obj %}
 {{ o.resource_name }}<br>
-     {{ o.starttime }} TO
-     {{ o.event_start_time }}<br>
+     Free From {{ o.starttime }} TO
+     {{ o.event_start_time }}<br> and
      {{ o.event_end_time }} TO
-     {{ o.endtime }}<br>
+     {{ o.endtime }}<br><br><br>
 {% endfor %}
 </div>
 

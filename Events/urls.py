@@ -17,7 +17,7 @@ urlpatterns=[
     url(r'^logout1$',views.logout1,name="logout"),
     url(r'^edit/(?P<pk>[A-Za-z0-9 -]+)',classviews.EventUpdate.as_view(),name="edit_event"),
     url(r'^end/(?P<pk>[A-Za-z0-9 -]+)',classviews.EndEvent.as_view(),name="end_event"),
-    url(r'^resources',views.resourceView),
+    url(r'^resources',views.resourceview),
 
     #
     # url(r'^event_snippets/$',views.snippet_list),
