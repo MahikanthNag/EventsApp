@@ -4,12 +4,6 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.template.context import RequestContext
-from django.utils.decorators import method_decorator
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from Events.models import *
-from Events.serializers import SnippetSerializer
 
 # Create your views here.
 from django.template import loader
@@ -103,12 +97,6 @@ def resourceView(request,date):
     res=ResourceUsage.objects.filter(date__exact=date)
     template = loader.get_template('HomePage.html')
     result = template.render()
-
-
-
-
-
-
 
 
 def homepage(request):
