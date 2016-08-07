@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+ {% for o in obj %}
+{{ o.resource_name }}<br>
+     {{ o.starttime }} TO
+     {{ o.event_start_time }}<br>
+     {{ o.event_end_time }} TO
+     {{ o.endtime }}<br>
+{% endfor %}
+</div>
+
+</body>
+</html>

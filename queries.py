@@ -15,5 +15,6 @@ q=EventsList.objects.values('eventid','eventname','description').filter(staffid=
 # q=EventsList.objects.values('eventid','eventname','description').filter(staffid=Faculty.objects.get(staffid="1"))
 # q=Faculty.objects.values('staffid').get(staffid="1234")
 # q=Faculty.objects.values('').get(staffid="1234")
-q=(True==Settings.objects.values_list('CSE_Lab1').latest('id')[0])
-print q
+# q=(True==Settings.objects.values_list('CSE_Lab1').latest('id')[0])
+all_res = Resources.objects.all()
+print all_res[0].resource_name

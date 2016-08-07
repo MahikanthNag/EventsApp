@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.shortcuts import render
-
+from django.utils import timezone
 # Create your views here.
 from django.template.context import RequestContext
 from django.utils.decorators import method_decorator
@@ -19,6 +19,8 @@ from django.shortcuts import render
 from django.contrib.auth import logout
 from httpie.models import HTTPResponse
 from Events.forms import *
+import datetime as dt
+import time
 # from Events.models import EventsList
 
 def logout1(request):
@@ -92,27 +94,38 @@ def get_eventregistrationform(request):
 
 
 
-def resourceView(request,date):
-    all_res = Resources.objects.values_list('resoure_name')
+def resourceView(request):
+    all_res = Resources.objects.all()
     context = []
     for resource in all_res:
         obj = {}
-        obj['resource_name'] = resource
+        obj['resource_name'] = resource.resource_name
         obj['starttime'] = "10:00"
-        obj['endtime'] = "4.30"
-        if ResourceUsage.objects.filter(date=date, resource__resource_name__iexact=resource):
-            r=ResourceUsage.objects.get(resource__resource_name__iexact=resource)
-            start = datetime.time(10, 00)
-            end = datetime.time(16, 30)
+        obj['endtime'] = "16.30"
+        if ResourceUsage.objects.filter(date="2016-08-13", resource__resource_name__iexact=resource.resource_name):
+            r=ResourceUsage.objects.get(date="2016-08-13",resource__resource_name__iexact=resource.resource_name)
+            print r.starttime
+
+            start=dt.time(10,00)
+
+
+
+            end = dt.time(16, 30)
             if(start < r.starttime):
-                pass
+                obj['event_start_time']=r.starttime
+            else:
+                obj['event_start_time']="10:00"
+            if(end > r.endtime):
+                obj['event_end_time']=r.endtime
+            else:
+                obj['event_end_time']="16:30"
+
 
         context.append(obj)
-    res=ResourceUsage.objects.filter(date__exact=date)
-    template = loader.get_template('HomePage.html')
-    result = template.render()
-
-
+    # res=ResourceUsage.objects.filter(date__exact=date)
+    template = loader.get_template('FreeResources.html')
+    result = template.render(context={"obj":context})
+    return HttpResponse(result)
 
 
 
