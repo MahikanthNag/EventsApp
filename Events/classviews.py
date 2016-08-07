@@ -36,7 +36,20 @@ class eventslist(ListView):
             for e in events: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
             return events
 
-            # return EventsList.objects.values('eventid', 'eventname', 'description')
+class dashboard(ListView):
+    model = EventsList
+    template_name = 'HomePage.html'
+    context_object_name = 'eventslist'
+
+    def get_queryset(self):
+        user = self.request.user
+        events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date')
+        for e in events: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
+        return events
+
+
+
+                    # return EventsList.objects.values('eventid', 'eventname', 'description')
 
 # class LoginPage():
 #

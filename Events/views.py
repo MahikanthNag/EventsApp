@@ -48,7 +48,7 @@ def get_eventregistrationform(request):
             r = ResourceUsage.objects.filter(date=date, resource__resource_name__iexact=res)
             for res in r:
 
-                if(res.starttime<starttime and starttime<res.endtime) or (res.endtime>endtime and res.starttime<endtime):
+                if(res.starttime<=starttime and starttime<=res.endtime) or (res.endtime>=endtime and res.starttime<=endtime):
                     # check['one']=1
                     return render(request, 'Error.html')
 
@@ -64,6 +64,11 @@ def get_eventregistrationform(request):
 
     return render(request, 'registration/EventRegistration.html', {'form':form})
 
+
+# def dashboard(request):
+#     template = loader.get_template('HomePage.html')
+#     result = template.render()
+#     return HttpResponse(result)
 
 
 # def resourceView(request):

@@ -18,7 +18,8 @@ q=EventsList.objects.values('eventid','eventname','description').filter(staffid=
 # q=(True==Settings.objects.values_list('CSE_Lab1').latest('id')[0])
 q=ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact="CSE Lab1")
 r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact="CSE Lab1")
-all_res = Resources.objects.all()
+
+
 # for res in all_res:
 #     print res.resource_name
 # context1=[]
@@ -57,4 +58,7 @@ all_res = Resources.objects.all()
 # print context1
 
 r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact="CSE Lab1")
-print r[0].endtime
+for res in r:
+
+    print res.starttime
+    print res.endtime

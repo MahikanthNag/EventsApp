@@ -8,7 +8,8 @@ from django.db.models import *
 urlpatterns=[
 
     # url(r'^staff/(?P<id>[A-Za-z0-9]+)',views),
-    url(r'^$',classviews.Dashboard.as_view(),name='dashboard'),
+    # url(r'^$',views.dashboard),
+    url(r'^$',classviews.dashboard.as_view(),name='dashboard'),
     url(r'^register_event/see/(?P<pk>[A-Za-z0-9 -]+)/$',classviews.EventDetailView.as_view(),name='eventdetail'),
     url(r'^register_event/see/$',classviews.eventslist.as_view(),name='eventdata'),
     url(r'^register_event/$',login_required(views.get_eventregistrationform),name="event_registration"),

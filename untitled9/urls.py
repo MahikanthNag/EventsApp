@@ -23,6 +23,6 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
     url(r'^logout1/$',logout1,name="logout"),
     url(r'^events/home/',include('Events.urls')),
-    url(r'^createuser/$',get_registrationform,name="registration"),
+    # url(r'^createuser/$',get_registrationform,name="registration"),
     # url(r'^accounts/login',views.loginPage,name="login"),
 ]
