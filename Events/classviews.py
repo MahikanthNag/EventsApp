@@ -8,7 +8,6 @@ from django.http.response import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView, DetailView
 from django.utils import timezone
-from panda import request
 from rest_framework.urls import template_name
 
 from Events.forms import UpdateEventForm
@@ -33,7 +32,9 @@ class eventslist(ListView):
     def get_queryset(self):
 
             user=self.request.user
-            return EventsList.objects.values('id','eventname','description')
+            events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date')
+            for e in events: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
+            return events
 
             # return EventsList.objects.values('eventid', 'eventname', 'description')
 
