@@ -6,12 +6,6 @@ from django.shortcuts import render
 from django.utils import timezone
 # Create your views here.
 from django.template.context import RequestContext
-from django.utils.decorators import method_decorator
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from Events.models import *
-from Events.serializers import SnippetSerializer
 
 # Create your views here.
 from django.template import loader
@@ -33,33 +27,7 @@ def logout1(request):
 # def loginPage(request):
 
 
-def get_registrationform(request):
-    if(request.method=='POST'):
-        form=RegistrationForm(request.POST)
-        if form.is_valid():
-            username=form.cleaned_data['username']
-            email=form.cleaned_data['email']
 
-            # location=form.cleaned_data['location']
-            password1=form.cleaned_data['password1']
-            password2=form.cleaned_data['password2']
-            ID=form.cleaned_data['ID']
-            if password1==password2:
-                # u=User.objects.create_superuser(username,email,password1)
-                if len(ID)==4:
-                    r=Faculty(name=username,staffid=ID,password=password1,emailid=email)
-                    r.save()
-                    return HttpResponseRedirect("/login")
-                else:
-                    r=Students(name=username,rollno=ID,password=password1)
-                    r.save()
-                    return HttpResponseRedirect("events/home/staff/see")
-    else:
-        form=RegistrationForm()
-
-    return render(request, 'registration/login.html', {'form':form},RequestContext(request) )
-# @method_decorator(login_required,name="dispatch")
-# class RegisterEvent:
 def get_eventregistrationform(request):
     if(request.method=='POST'):
         form=EventRegistrationForm(request.POST)
@@ -67,25 +35,17 @@ def get_eventregistrationform(request):
             eventid=form.cleaned_data['eventid']
             eventname=form.cleaned_data['eventname']
             description = form.cleaned_data['description']
-            venue = form.cleaned_data['venue']
             date=form.cleaned_data['date']
 
             # department = form.cleaned_data['department']
             # section = form.cleaned_data['section']
             starttime=form.cleaned_data['starttime']
             endtime = form.cleaned_data['endtime']
-            # cselab1= form.cleaned_data['CSE_Lab1']
-            # cselab2 = form.cleaned_data['CSE_Lab2']
-            # cselab3 = form.cleaned_data['CSE_Lab3']
-            # cselab4 = form.cleaned_data['CSE_Lab4']
-            # jcboseqeee = form.cleaned_data['JC_Bose_QEEE']
-            # visweswarayya_conference = form.cleaned_data['Visweswarayya_Conference_Hall']
-            # cclab1 = form.cleaned_data['CC_Lab1']
-            # cclab2 = form.cleaned_data['CC_Lab2']
+
             res = form.cleaned_data['venue']
             resobj = Resources.objects.get(resource_name__iexact=res)
             # check={'one':0}
-            r = ResourceUsage.objects.filter(date=date, resource__resource_name__iexact=venue)
+            r = ResourceUsage.objects.filter(date=date, resource__resource_name__iexact=res)
             for res in r:
 
                 if(res.starttime<starttime and starttime<res.endtime) or (res.endtime>endtime and res.starttime<endtime):
@@ -192,10 +152,6 @@ def resourceview(request):
     # template = loader.get_template('FreeResources1.html')
     # result = template.render()
     return render(request, 'FreeResources1.html', {'obj': context1})
-
-
-
-
 
 
 def homepage(request):
