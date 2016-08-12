@@ -66,10 +66,18 @@
                 {% for l in eventslist %}
                     {
                         title: '{{ l.eventname }}',
-                        start: '{{ l.venue__date }}'
+                        start: '{{ l.venue__date }}',
+                        url: '/events/home/register_event/see/'+'{{ l.id }}'
                     },
                 {% endfor %}
             ],
+
+            eventClick: function(event) {
+                if (event.url){
+                    window.open(event.url, "_blank");
+                    return false;
+                }
+            },
 
             height: 650,
         });
