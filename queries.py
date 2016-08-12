@@ -57,8 +57,11 @@ r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iex
 # # print all_res[1].resource_name
 # print context1
 
-r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact="CSE Lab1")
-for res in r:
+# r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact="CSE Lab1")
+# for res in r:
+#
+#     print res.starttime
+#     print res.endtime
 
-    print res.starttime
-    print res.endtime
+r=Resources.objects.all()
+print r

@@ -6,14 +6,44 @@
 </head>
 <body>
 <div>
-{#{{ obj }}#}
- {% for o in obj %}
-{{ o.resource_name }}<br>
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col s12 m12 l12">
+{% for o in obj%}
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+
+    {% if o.resource_name %} 
+
+<p>{{ o.resource_name }}<br>
      Free From {{ o.starttime }} TO
      {{ o.event_start_time }}<br> and
      {{ o.event_end_time }} TO
-     {{ o.endtime }}<br><br><br>
-{% endfor %}
+     {{ o.endtime }}<br>
+   </p>
+                {% endif %}
+
+
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+
+
+
+{#{{ obj }}#}
+{# {% for o in obj %}#}
+{#{{ o.resource_name }}<br>#}
+{#     Free From {{ o.starttime }} TO#}
+{#     {{ o.event_start_time }}<br> and#}
+{#     {{ o.event_end_time }} TO#}
+{#     {{ o.endtime }}<br><br><br>#}
+{#{% endfor %}#}
 </div>
 
 </body>

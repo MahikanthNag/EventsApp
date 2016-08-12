@@ -34,13 +34,17 @@ def get_eventregistrationform(request):
         if form.is_valid():
             eventid=form.cleaned_data['eventid']
             eventname=form.cleaned_data['eventname']
+            year=form.cleaned_data['year']
+
             description = form.cleaned_data['description']
             date=form.cleaned_data['date']
 
-            # department = form.cleaned_data['department']
-            # section = form.cleaned_data['section']
+            branch= form.cleaned_data['branch']
+            section = form.cleaned_data['section']
             starttime=form.cleaned_data['starttime']
             endtime = form.cleaned_data['endtime']
+            resourceperson=form.cleaned_data['resourceperson']
+            res_person_workplace=form.cleaned_data['res_person_workplace']
 
             res = form.cleaned_data['venue']
             resobj = Resources.objects.get(resource_name__iexact=res)
@@ -56,7 +60,9 @@ def get_eventregistrationform(request):
 
             rusage = ResourceUsage(date=date, resource=resobj, starttime=starttime, endtime=endtime)
             rusage.save()
-            r = EventsList(eventname=eventname, eventid=eventid, venue=rusage, staffid=request.user, section="A", branch="CSE", description=description)
+            r = EventsList(eventname=eventname, eventid=eventid, venue=rusage, staffid=request.user,
+                           section=section, branch=branch, description=description,resourceperson=resourceperson,
+                           res_person_workplace=res_person_workplace,year=int(year))
             r.save()
             return HttpResponseRedirect("/events/home/register_event/see")
     else:
@@ -110,7 +116,7 @@ def get_eventregistrationform(request):
 #     # result = template.render()
 #     return render(request, 'FreeResources1.html', {'obj': context1})
 
-def resourceview(request):
+def resourceview(request,date1):
     all_res = Resources.objects.all()
     context1 = []
     obj = {}
@@ -127,7 +133,7 @@ def resourceview(request):
         context1[i]['endtime'] = dt.time(16,30).__str__()
                 # if ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact=resource.resource_name):
         #     r=ResourceUsage.objects.get(date="2016-08-12",resource__resource_name__iexact=resource.resource_name)
-        r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact=resource.resource_name)
+        r = ResourceUsage.objects.filter(date=date1, resource__resource_name__iexact=resource.resource_name)
 
         for res in r:
 

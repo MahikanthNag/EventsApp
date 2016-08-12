@@ -35,10 +35,14 @@ class EventsList(models.Model):
     eventid=models.CharField(max_length=20)
     eventname=models.CharField(max_length=30)
     staffid=models.ForeignKey(User)
+    year=models.IntegerField(default=0)
     branch=models.CharField(max_length=6,default='select')
     section = models.CharField(max_length=6,default='select')
     description=models.CharField(max_length=1000)
     venue=models.ForeignKey(ResourceUsage)
+    resourceperson=models.CharField(max_length=30,default="NULL")
+    res_person_workplace=models.CharField(max_length=30,default="NULL")
+
 
     def __str__(self):
         return self.eventname

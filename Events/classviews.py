@@ -118,6 +118,8 @@ class EventUpdate(UpdateView):
     fields = '__all__'
     template_name = 'event_update.html'
 
+
+
 class EventDetailView(DetailView):
     model = EventsList
     template_name = 'event_detail.html'
