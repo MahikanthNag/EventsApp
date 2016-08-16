@@ -10,10 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body class="container">
+<table>
+    <th><h1>{{ object.eventname }}</h1></th>
 
-    <h1>{{ object.eventname }}</h1>
-    <p>{{ object.description }}</p>
-
+    <p><tr><td>About The Event : </td><td>{{ object.description }}</td></tr></p>
+                <p><tr><td>Date Of Event : </td><td>{{ object.venue__date }}</td></tr></p>
+                <p><tr><td>Venue : </td><td>{{ object.venue__resource__resource_name }}</td></tr></p>
+                <p><tr><td>Start Time : </td><td>{{ object.venue__starttime }}</td></tr></p>
+                <p><tr><td>End Time : </td><td>{{ object.venue__endtime}}</td></tr></p>
+</table>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src={% static "js/materialize.min.js"%}></script>
 

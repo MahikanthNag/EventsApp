@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'EventsManagerDb',
         'USER': 'root',
 
-        'PASSWORD': 'password',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
     }

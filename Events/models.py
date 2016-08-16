@@ -8,6 +8,7 @@ from django.db import models
 
 # Create your models here.
 #Students Model to be stored as a table in mysql database
+# instead of extending models.Model extend django.contrib.auth.models.User
 class Students(models.Model):
     name=models.CharField(max_length=30)
     rollno=models.CharField(max_length=20)

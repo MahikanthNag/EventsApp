@@ -43,11 +43,19 @@
           <div class="card blue-grey darken-1">
             <div class="card-content white-text">
               <span class="card-title">{{ l.eventname }}</span>
-              <p>{{ l.description }}</p>
+              <p>About The Event : {{ l.description }}</p>
+                <p>Date Of Event : {{ l.venue__date }}</p>
+                <p>Venue : {{ l.venue__resource__resource_name }}</p>
+                <p>Start Time : {{ l.venue__starttime }}</p>
+                <p>End Time : {{ l.venue__endtime}}</p>
             </div>
             <div class="card-action">
               <a href="/events/home/edit/{{ l.id }}">Edit</a>
             </div>
+{#              <div class="card-action">#}
+{#              <a href="/events/home/edit/{{ l.id }}">Delete</a>#}
+{#              </div>#}
+
           </div>
             </a>
         </div>

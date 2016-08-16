@@ -42,32 +42,56 @@
       </div>
     </nav>
     </div>
-
-
-
-
-
 <div class="container">
         <div id="calendar" class="fc fc-unthemed fc-ltr">
         </div>
     </div>
 
-<script>
+
+    <script>
     $(document).ready(function() {
         $('#calendar').fullCalendar({
             events: [
                 {% for l in eventslist %}
                     {
                         title: '{{ l.eventname }}',
-                        start: '{{ l.venue__date }}'
+                        start: '{{ l.venue__date }}',
+                        url: '/events/home/register_event/see/'+'{{ l.id }}'
                     },
                 {% endfor %}
             ],
+
+            eventClick: function(event) {
+                if (event.url){
+                    window.open(event.url, "_blank");
+                    return false;
+                }
+            },
 
             height: 650,
         });
     });
 </script>
+
+
+
+
+{#<script>#}
+{#    $(document).ready(function() {#}
+{#        $('#calendar').fullCalendar({#}
+{#            events: [#}
+{#                {% for l in eventslist %}#}
+{#                    {#}
+{#                        title: '{{ l.eventname }}',#}
+{#                        start: '{{ l.venue__date }}'#}
+{#                    },#}
+{#                {% endfor %}#}
+{#            ],#}
+{##}
+{#            height: 650,#}
+{#        });#}
+{#    });#}
+{#</script>#}
 
 
 </body>

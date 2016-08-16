@@ -70,52 +70,6 @@ def get_eventregistrationform(request):
 
     return render(request, 'registration/EventRegistration.html', {'form':form})
 
-
-# def dashboard(request):
-#     template = loader.get_template('HomePage.html')
-#     result = template.render()
-#     return HttpResponse(result)
-
-
-# def resourceView(request):
-#     all_res = Resources.objects.all()
-#     context1 = []
-#     obj = {}
-#     for resource in all_res:
-#
-#         obj['resource_name'] = resource.resource_name
-#         obj['starttime'] = "10:00"
-#         obj['endtime'] = "16.30"
-#         obj['event_start_time']="none"
-#         obj['event_end_time'] = "none"
-#         # if ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact=resource.resource_name):
-#         #     r=ResourceUsage.objects.get(date="2016-08-12",resource__resource_name__iexact=resource.resource_name)
-#         r = ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact=resource.resource_name)
-#         obj['starttime'] = "changed"
-#         for res in r:
-#
-#             obj['starttime']="changed"
-#             start=dt.time(10,00)
-#
-#
-#
-#             end = dt.time(16, 30)
-#             if(start < res.starttime):
-#                 obj['event_start_time']=res.starttime.__str__()
-#             else:
-#                 obj['event_start_time']="10:00"
-#             if(end > res.endtime):
-#                 obj['event_end_time']=res.endtime.__str__()
-#             else:
-#                 obj['event_end_time']="16:30"
-#
-#
-#             context1.append(obj)
-#     # res=ResourceUsage.objects.filter(date__exact=date)
-#     # template = loader.get_template('FreeResources1.html')
-#     # result = template.render()
-#     return render(request, 'FreeResources1.html', {'obj': context1})
-
 def resourceview(request,date1):
     all_res = Resources.objects.all()
     context1 = []
@@ -183,8 +137,8 @@ def cancelEvent(request):
 
 def getidcontent(request,id):
 
-    eventslist=EventsList.objects.filter(staffid=id)
-
+    eventslist=EventsList.objects.filter(staffid=id).values('eventid', 'eventname', 'venue__date')
+    for e in eventslist: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
     template=loader.get_template('EventList.html')
     result=template.render(context={"eventslist":eventslist})
     return HttpResponse(result)
@@ -205,20 +159,11 @@ def editEvent(request,id):
             # section = form.cleaned_data['section']
             starttime = form.cleaned_data['starttime']
             endtime = form.cleaned_data['endtime']
-            # location=form.cleaned_data['location']
 
-            # ID=form.cleaned_data['ID']
-
-
-            # r=EventsList(eventname=eventname,staffid=12,eventid=eventid,venue=venue,description=description,section="A",branch="CSE",day=date.day,month=date.month,year=date.year,starthour=starttime.hour,startminute=starttime.minute,endhour=endtime.hour,endminute=endtime.minute)
-            # r.save()
-            # r = EventsList(eventname=eventname, staffid=Faculty.objects.get(staffid=request.user), eventid=eventid, venue=venue, description=description,section="A", branch="CSE",rating=5, day=date.day, month=date.month, year=date.year,starthour=starttime.hour, startminute=starttime.minute, endhour=endtime.hour,endminute=endtime.minute)
-            # r = EventsList(eventname=eventname, staffid="1771", eventid=eventid, venue=venue, description=description,section="A", branch="CSE", rating=5, day=date.day, month=date.month, year=date.year,starthour=starttime.hour, startminute=starttime.minute, endhour=endtime.hour,endminute=endtime.minute)
-            # r.save()
             eventslist = EventsList.objects.filter(eventid=id).update(eventname=eventname, staffid="1771", eventid=eventid, venue=venue, description=description,section="A", branch="CSE", rating=5, day=date.day, month=date.month, year=date.year,starthour=starttime.hour, startminute=starttime.minute, endhour=endtime.hour,endminute=endtime.minute)
             eventslist.save()
             return HttpResponseRedirect("/events/home/register_event/see")
     else:
         form = UpdateEventForm(id)
 
-    return render(request, 'registration/EventRegistration.html', {'form': form})
+    return render(request, 'event_update.html', {'form': form})

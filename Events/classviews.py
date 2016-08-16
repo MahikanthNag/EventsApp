@@ -13,6 +13,7 @@ from rest_framework.urls import template_name
 from Events.forms import UpdateEventForm
 from Events.models import *
 from django.views.generic.list import ListView
+from django.views import *
 
 class Dashboard(ListView):
     template_name = 'Dashboard.html'
@@ -32,7 +33,7 @@ class eventslist(ListView):
     def get_queryset(self):
 
             user=self.request.user
-            events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date')
+            events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date','venue__resource__resource_name','venue__starttime','venue__endtime')
             for e in events: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
             return events
 
@@ -115,15 +116,20 @@ class UpdateEvent(ListView):
 
 class EventUpdate(UpdateView):
     model = EventsList
-    fields = '__all__'
+    # form_class = UpdateEventForm2
+    fields = ['eventname', 'description', 'resourceperson', 'res_person_workplace']
     template_name = 'event_update.html'
+
 
 
 
 class EventDetailView(DetailView):
     model = EventsList
     template_name = 'event_detail.html'
-    def get_context_data(self, **kwargs):
-        context = super(EventDetailView, self).get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(EventDetailView, self).get_context_data(**kwargs)
+    #     context['now'] = timezone.now()
+    #     return context
+
+    context_object_name = 'object'
+    queryset =EventsList.objects.values('id', 'eventname', 'description', 'venue__date','venue__resource__resource_name','venue__starttime','venue__endtime')

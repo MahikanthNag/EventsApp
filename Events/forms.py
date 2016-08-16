@@ -55,7 +55,6 @@ class EventRegistrationForm(forms.Form):
 
 
 class UpdateEventForm(forms.Form):
-
     eventname=forms.CharField(max_length=30,label="eventname",required=True,error_messages={'invalid':'Event Name should be unique'})
     eventid=forms.CharField(label="eventid",required=True,max_length=15)
     description=forms.CharField(max_length=500, label="description", required=True)
