@@ -16,6 +16,7 @@ from django.contrib.auth import logout
 from httpie.models import HTTPResponse
 from Events.forms import *
 import datetime as dt
+from django.contrib import messages
 import time
 # from Events.models import EventsList
 
@@ -50,13 +51,24 @@ def get_eventregistrationform(request):
             resobj = Resources.objects.get(resource_name__iexact=res)
             # check={'one':0}
             r = ResourceUsage.objects.filter(date=date, resource__resource_name__iexact=res)
+
+            check=EventsList.objects.filter(venue__date=date,branch=branch)
+            if check:
+                if check[0].section=="both":
+                    messages.error(request, "This branch has another event on this date.")
+                if check[0].section == section:
+                    messages.error(request, "This section has another event on this date.")
+                return render(request, 'registration/EventRegistration.html', {'form': form})
+
+            if date.__str__() < dt.datetime.today().__str__():
+                messages.error(request, "Cannot register on a past date.")
+                return render(request, 'registration/EventRegistration.html', {'form': form})
+
             for res in r:
 
                 if(res.starttime<=starttime and starttime<=res.endtime) or (res.endtime>=endtime and res.starttime<=endtime):
-                    # check['one']=1
-                    return render(request, 'Error.html')
-
-
+                    obj = resourceview(date)
+                    return render(request, 'Error.html', context={'date':date, 'obj':obj})
 
             rusage = ResourceUsage(date=date, resource=resobj, starttime=starttime, endtime=endtime)
             rusage.save()
@@ -70,7 +82,7 @@ def get_eventregistrationform(request):
 
     return render(request, 'registration/EventRegistration.html', {'form':form})
 
-def resourceview(request,date1):
+def resourceview(date1):
     all_res = Resources.objects.all()
     context1 = []
     obj = {}
@@ -116,7 +128,7 @@ def resourceview(request,date1):
     # res=ResourceUsage.objects.filter(date__exact=date)
     # template = loader.get_template('FreeResources1.html')
     # result = template.render()
-    return render(request, 'FreeResources1.html', {'obj': context1})
+    return context1
 
 
 def homepage(request):
@@ -137,10 +149,24 @@ def cancelEvent(request):
 
 def getidcontent(request,id):
 
-    eventslist=EventsList.objects.filter(staffid=id).values('eventid', 'eventname', 'venue__date')
+    eventslist=EventsList.objects.filter(staffid=id).values('eventid', 'eventname', 'venue__date','id','venue__endtime','venue__starttime'
+                                                            ,'resourceperson','res_person_workplace','staffid__first_name')
     for e in eventslist: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
     template=loader.get_template('EventList.html')
     result=template.render(context={"eventslist":eventslist})
+    return HttpResponse(result)
+
+def geteventcontent(request,id):
+
+    eventslist=EventsList.objects.filter(pk=id).values('eventname', 'venue__date','id','venue__endtime','venue__starttime'
+                                                            ,'resourceperson','res_person_workplace','staffid__first_name',
+                                                       'venue__resource__resource_name', 'description', 'staffid__username')
+    for e in eventslist: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
+    eventslist[0]['own'] = False
+    if request.user.username == eventslist[0]['staffid__username']:
+        eventslist[0]['own'] = True
+    template=loader.get_template('event_detail.html')
+    result=template.render(context={"object":eventslist[0]})
     return HttpResponse(result)
 
 

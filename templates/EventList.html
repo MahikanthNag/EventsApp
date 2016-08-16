@@ -9,7 +9,7 @@
     <link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="{% static "css/fullcalendar.css" %}" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static "js/jquery-3.1.0.js"%}"></script>
     <script type="text/javascript" src={% static "js/materialize.min.js"%}></script>
     <script type="text/javascript" src={% static "js/moment.js"%}></script>
     <script type="text/javascript" src={% static "js/fullcalendar.js"%}></script>
@@ -48,9 +48,9 @@
                 <p>Venue : {{ l.venue__resource__resource_name }}</p>
                 <p>Start Time : {{ l.venue__starttime }}</p>
                 <p>End Time : {{ l.venue__endtime}}</p>
-            </div>
-            <div class="card-action">
-              <a href="/events/home/edit/{{ l.id }}">Edit</a>
+{#                <p>Resource Person : {{ l.resourceperson}}</p>#}
+{#                <p>Workplace Of Resource Person: {{ l.res_person_workplace}}</p>#}
+{#                <p>Staff Name : {{ l.staffid__first_name}}</p>#}
             </div>
 {#              <div class="card-action">#}
 {#              <a href="/events/home/edit/{{ l.id }}">Delete</a>#}

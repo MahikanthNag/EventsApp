@@ -1,39 +1,57 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static "css/fullcalendar.css" %}" media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src={% static "js/materialize.min.js"%}></script>
+    <script type="text/javascript" src={% static "js/moment.js"%}></script>
+    <script type="text/javascript" src={% static "js/fullcalendar.js"%}></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<div>
+
 
 
 
 <div class="container">
-    <div class="row">
 
-        <div class="col s12 m12 l12">
+
+        <h1 align="center">Available resources on</h1>
+        <table class="table table-striped">
+        <tr><th>Resource Name</th><th>Free From</th><th>To</th><th>Free From</th><th>To</th></tr>
 {% for o in obj%}
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
 
     {% if o.resource_name %}
 
-<p>{{ o.resource_name }}<br>
-     Free From {{ o.starttime }} TO
-     {{ o.event_start_time }}<br> and
-     {{ o.event_end_time }} TO
-     {{ o.endtime }}<br>
-   </p>
+<tr><td>
+{{ o.resource_name }}</td><td>
+      {{ o.starttime }}</td>
+     <td>{{ o.event_start_time }}<br></td>
+     <td>{{ o.event_end_time }}</td>
+     <td>{{ o.endtime }}</td></tr></br>
+
                 {% endif %}
 
 
-          </div>
-
-        </div>
         {% endfor %}
-      </div>
+    </table>
 
+</div>
 
 
 {#{{ obj }}#}

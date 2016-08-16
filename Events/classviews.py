@@ -132,4 +132,6 @@ class EventDetailView(DetailView):
     #     return context
 
     context_object_name = 'object'
-    queryset =EventsList.objects.values('id', 'eventname', 'description', 'venue__date','venue__resource__resource_name','venue__starttime','venue__endtime')
+    queryset =EventsList.objects.values('id', 'eventname', 'description', 'venue__date','venue__resource__resource_name',
+                                        'venue__starttime','venue__endtime', 'resourceperson', 'res_person_workplace', 'staffid__first_name')
+

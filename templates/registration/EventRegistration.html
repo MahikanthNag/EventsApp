@@ -33,8 +33,15 @@
     <h1 class="text-center">Create new event </h1>
     <div id="big-form" class="well auth-box">
 
+    {% if messages %}
+        {% for message in messages %}
+            <h5 class="red-text">{{ message }}</h5>
+        {% endfor %}
+        {% endif %}
+
     <form action="/events/home/register_event/" method="post">{% csrf_token %}
         <div class="row">
+
         {% for field in form %}
                 <div class="input-field col s12">
                     {{ field.errors }}
