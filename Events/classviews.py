@@ -117,7 +117,8 @@ class UpdateEvent(ListView):
 class EventUpdate(UpdateView):
     model = EventsList
     # form_class = UpdateEventForm2
-    fields = ['eventname', 'description', 'resourceperson', 'res_person_workplace']
+    # slug_field = ''
+    fields = ['eventname', 'description', 'resourceperson', 'res_person_workplace','venue__starttime']
     template_name = 'event_update.html'
 
 

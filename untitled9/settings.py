@@ -24,7 +24,7 @@ SECRET_KEY = 'csg1j=+76!e05cv6@8-pqz01)pfrp!131#t)18&fxsjoc6(vt5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+APPEND_SLASH=False
 from django.core.urlresolvers import resolve,reverse_lazy
 ALLOWED_HOSTS = []
 LOGIN_URL='/login/'

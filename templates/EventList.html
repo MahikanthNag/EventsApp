@@ -17,17 +17,86 @@
 
 </head>
 <body>
-    <div class="navbar-fixed">
+
+<div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
 
-        <ul class="right hide-on-med-and-down">
-            <li><a href="{% url 'facultydata' %}">View Faculty</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+        <ul class="center-align hide-on-med-and-down">
+            <li><a class="waves-effect waves-light btn" href="/events/home/register_event/">Create An Event</a></li>
+            <li><a id="myBtn" class="waves-effect waves-light btn" >Available Resources</a></li>
+
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close">×</span>
+                <p style="color: red;">Some text in the Modal..</p>
+
+                 <p style="color: black">
+
+                    <input type="date" id="getdate" /><br>
+                        <a id="ok" class="btn btn-success"  onclick="myFunction()"> OK </a>
+
+{#                 <script type="text/javascript"#}
+{#src={% static "js/Calendar.aspx"%}></script>#}
+
+                 </p>
+              </div>
+
+            </div>
+<script>
+function myFunction() {
+    var value=document.getElementById("getdate").value;
+
+    document.getElementById("ok").href="/events/home/resources/"+value
+}
+</script>
+            <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+
+            var btn = document.getElementById("myBtn");
+            var date=document.getElementById("getdate");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            </script>
+
+
+
+
+            <li><a class="waves-effect waves-light btn" href="/events/home/staff/all">Faculty List</a></li>
+
         </ul>
+          <ul class="right hide-on-med-and-down">
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+              </ul>
       </div>
     </nav>
     </div>
+
     <p></p>
     <div class="container">
         <div id="calendar" class="fc fc-unthemed fc-ltr">

@@ -131,6 +131,66 @@ def resourceview(date1):
     return context1
 
 
+
+
+
+
+
+def resview(request,date1):
+    all_res = Resources.objects.all()
+    context1 = []
+    obj = {}
+    flag=0
+    i=0
+    for i in range(0, 100):
+        context1.append({})
+    i = 0
+
+    for resource in all_res:
+        flag=0
+        context1[i]['resource_name'] = resource.resource_name
+        context1[i]['starttime'] = dt.time(10,00).__str__()
+        context1[i]['endtime'] = dt.time(16,30).__str__()
+                # if ResourceUsage.objects.filter(date="2016-08-12", resource__resource_name__iexact=resource.resource_name):
+        #     r=ResourceUsage.objects.get(date="2016-08-12",resource__resource_name__iexact=resource.resource_name)
+        r = ResourceUsage.objects.filter(date=date1, resource__resource_name__iexact=resource.resource_name)
+
+        for res in r:
+
+            flag=1
+            start=dt.time(10,00)
+
+
+
+            end = dt.time(16, 30)
+            if(start < res.starttime):
+                context1[i]['event_start_time']=res.starttime.__str__()
+            else:
+                context1[i]['event_start_time']=dt.time(10,00).__str__()
+            if(end > res.endtime):
+                context1[i]['event_end_time']=res.endtime.__str__()
+            else:
+                context1[i]['event_end_time']=dt.time(16,30).__str__()
+            i=i+1
+
+            context1.append(obj)
+        if flag==0:
+            context1[i]['event_start_time']=dt.time(12,00)
+            context1[i]['event_end_time']=dt.time(12,00)
+            i=i+1
+            # context1.append(obj)
+    # res=ResourceUsage.objects.filter(date__exact=date)
+    template = loader.get_template('FreeResources1.html')
+    result = template.render(context={"obj":context1})
+    return HttpResponse(result)
+
+
+
+
+
+
+
+
 def homepage(request):
     template = loader.get_template('HomePage.html')
     result = template.render()
