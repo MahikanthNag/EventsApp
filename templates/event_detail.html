@@ -105,7 +105,8 @@ function myFunction() {
 
 <div class="container">
     {% if object.own == True %}
-    <div class="btn right"><a class="white-text" href="/events/home/edit/{{ object.id }}">Edit</a></div>
+        <div class="btn right"><a class="white-text" href="/events/home/delete/{{ object.id }}">Delete</a></div>
+        <div class="btn right"><a class="white-text" href="/events/home/edit/{{ object.id }}">Edit</a></div>
     {% endif %}
 <table class="table">
 

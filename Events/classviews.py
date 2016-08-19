@@ -8,6 +8,7 @@ from django.http.response import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView, DetailView
 from django.utils import timezone
+from django.views.generic.edit import DeleteView
 from rest_framework.urls import template_name
 
 from Events.forms import UpdateEventForm, UpdateEventForm1
@@ -137,3 +138,7 @@ class EventDetailView(DetailView):
     queryset =EventsList.objects.values('id', 'eventname', 'description', 'venue__date','venue__resource__resource_name',
                                         'venue__starttime','venue__endtime', 'resourceperson', 'res_person_workplace', 'staffid__first_name')
 
+class EventDeleteView(DeleteView):
+    model = EventsList
+    template_name = 'eventslist_confirm_delete.html'
+    success_url = '/events/home/'

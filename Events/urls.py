@@ -18,6 +18,7 @@ urlpatterns=[
     url(r'^logout1$',views.logout1,name="logout"),
     url(r'^edit/(?P<id>[A-Za-z0-9 -]+)',views.editEvent,name="edit_event"),
     url(r'^end/(?P<pk>[A-Za-z0-9 -]+)',classviews.EndEvent.as_view(),name="end_event"),
+    url(r'^delete/(?P<pk>[A-Za-z0-9 -]+)',classviews.EventDeleteView.as_view(),name="end_event"),
     url(r'^resources/(?P<date1>[0-9 -]+)',views.resview),
 
     #
