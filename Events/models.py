@@ -33,7 +33,6 @@ class ResourceUsage(models.Model):
 
 
 class EventsList(models.Model):
-    eventid=models.CharField(max_length=20)
     eventname=models.CharField(max_length=30)
     staffid=models.ForeignKey(User)
     year=models.IntegerField(default=0)
