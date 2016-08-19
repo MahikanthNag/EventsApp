@@ -10,7 +10,7 @@ from django.views.generic import UpdateView, DetailView
 from django.utils import timezone
 from rest_framework.urls import template_name
 
-from Events.forms import UpdateEventForm
+from Events.forms import UpdateEventForm, UpdateEventForm1
 from Events.models import *
 from django.views.generic.list import ListView
 from django.views import *
@@ -20,7 +20,7 @@ class Dashboard(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return EventsList.objects.values('eventid', 'eventname', 'description')
+        return EventsList.objects.values('eventname', 'description')
 class EndEvent(ListView):
     pass
 
@@ -82,7 +82,6 @@ class UpdateEvent(ListView):
         if (request.method == 'POST'):
             form = UpdateEventForm(request.POST)
             if form.is_valid():
-                eventid = form.cleaned_data['eventid']
                 eventname = form.cleaned_data['eventname']
                 description = form.cleaned_data['description']
                 venue = form.cleaned_data['venue']
@@ -98,8 +97,8 @@ class UpdateEvent(ListView):
                 # r = EventsList(eventname=eventname, staffid=Faculty.objects.get(staffid=request.user), eventid=eventid, venue=venue, description=description,section="A", branch="CSE",rating=5, day=date.day, month=date.month, year=date.year,starthour=starttime.hour, startminute=starttime.minute, endhour=endtime.hour,endminute=endtime.minute)
                 # r = EventsList(eventname=eventname, staffid="1771", eventid=eventid, venue=venue, description=description,section="A", branch="CSE", rating=5, day=date.day, month=date.month, year=date.year,starthour=starttime.hour, startminute=starttime.minute, endhour=endtime.hour,endminute=endtime.minute)
                 # r.save()
-                eventslist = EventsList.objects.filter(eventid=id).update(eventname=eventname, staffid="1771",
-                                                                          eventid=eventid, venue=venue,
+                eventslist = EventsList.objects.filter(pk=id).update(eventname=eventname, staffid="1771",
+                                                                          venue=venue,
                                                                           description=description, section="A",
                                                                           branch="CSE", rating=5, day=date.day,
                                                                           month=date.month, year=date.year,
@@ -116,11 +115,13 @@ class UpdateEvent(ListView):
 
 class EventUpdate(UpdateView):
     model = EventsList
-    # form_class = UpdateEventForm2
-    # slug_field = ''
-    fields = ['eventname', 'description', 'resourceperson', 'res_person_workplace','venue__starttime']
+    form_class = UpdateEventForm1
     template_name = 'event_update.html'
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        return HttpResponseRedirect("/events/home/register_event/see")
 
 
 

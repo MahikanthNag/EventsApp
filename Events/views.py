@@ -1,7 +1,7 @@
 from Tkinter import _stringify
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.shortcuts import render
 from django.utils import timezone
 # Create your views here.
@@ -33,7 +33,6 @@ def get_eventregistrationform(request):
     if(request.method=='POST'):
         form=EventRegistrationForm(request.POST)
         if form.is_valid():
-            eventid=form.cleaned_data['eventid']
             eventname=form.cleaned_data['eventname']
             year=form.cleaned_data['year']
 
@@ -72,7 +71,7 @@ def get_eventregistrationform(request):
 
             rusage = ResourceUsage(date=date, resource=resobj, starttime=starttime, endtime=endtime)
             rusage.save()
-            r = EventsList(eventname=eventname, eventid=eventid, venue=rusage, staffid=request.user,
+            r = EventsList(eventname=eventname, venue=rusage, staffid=request.user,
                            section=section, branch=branch, description=description,resourceperson=resourceperson,
                            res_person_workplace=res_person_workplace,year=int(year))
             r.save()
@@ -209,7 +208,7 @@ def cancelEvent(request):
 
 def getidcontent(request,id):
 
-    eventslist=EventsList.objects.filter(staffid=id).values('eventid', 'eventname', 'venue__date','id','venue__endtime','venue__starttime'
+    eventslist=EventsList.objects.filter(staffid=id).values('eventname', 'venue__date','id','venue__endtime','venue__starttime'
                                                             ,'resourceperson','res_person_workplace','staffid__first_name')
     for e in eventslist: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
     template=loader.get_template('EventList.html')
@@ -233,23 +232,38 @@ def geteventcontent(request,id):
 def editEvent(request,id):
 
     if (request.method == 'POST'):
-        form = UpdateEventForm(request.POST)
+        form = UpdateEventForm1(request.POST)
         if form.is_valid():
-            eventid = form.cleaned_data['eventid']
             eventname = form.cleaned_data['eventname']
             description = form.cleaned_data['description']
-            venue = form.cleaned_data['venue']
+            resourceperson = form.cleaned_data['resourceperson']
+            res_work = form.cleaned_data['res_person_workplace']
             date = form.cleaned_data['date']
-
-            # department = form.cleaned_data['department']
-            # section = form.cleaned_data['section']
+            branch = form.cleaned_data['branch']
+            section = form.cleaned_data['section']
             starttime = form.cleaned_data['starttime']
             endtime = form.cleaned_data['endtime']
 
-            eventslist = EventsList.objects.filter(eventid=id).update(eventname=eventname, staffid="1771", eventid=eventid, venue=venue, description=description,section="A", branch="CSE", rating=5, day=date.day, month=date.month, year=date.year,starthour=starttime.hour, startminute=starttime.minute, endhour=endtime.hour,endminute=endtime.minute)
-            eventslist.save()
+            res = form.cleaned_data['venue']
+            resobj = Resources.objects.get(resource_name__iexact=res)
+            resusageobj = EventsList.objects.get(pk=id).venue
+            resusageobj.resource = resobj
+            resusageobj.date = date
+            resusageobj.starttime = starttime
+            resusageobj.endtime = endtime
+            resusageobj.save()
+
+            eventlist = EventsList.objects.get(pk=id)
+            eventlist.description = description
+            eventlist.eventname = eventname
+            eventlist.branch = branch
+            eventlist.section = section
+            eventlist.resourceperson = resourceperson
+            eventlist.res_person_workplace = res_work
+            eventlist.save()
             return HttpResponseRedirect("/events/home/register_event/see")
     else:
-        form = UpdateEventForm(id)
+
+        form = UpdateEventForm1(initial=EventsList.objects.filter(pk=id).values()[0])
 
     return render(request, 'event_update.html', {'form': form})
