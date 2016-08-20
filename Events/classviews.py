@@ -1,4 +1,4 @@
-
+import user
 from unittest.case import _UnexpectedSuccess
 
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView, DetailView
 from django.utils import timezone
 from django.views.generic.edit import DeleteView
-
+from rest_framework.urls import template_name
 
 from Events.forms import UpdateEventForm, UpdateEventForm1
 from Events.models import *

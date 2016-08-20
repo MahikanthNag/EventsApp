@@ -1,3 +1,5 @@
+from Tkinter import _stringify
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, render_to_response
 from django.shortcuts import render
@@ -11,11 +13,11 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth import logout
-
+from httpie.models import HTTPResponse
 from Events.forms import *
 import datetime as dt
 from django.contrib import messages
-
+import time
 # from Events.models import EventsList
 
 def logout1(request):
