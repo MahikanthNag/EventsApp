@@ -35,8 +35,17 @@ class eventslist(ListView):
 
             user=self.request.user
             events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date','venue__resource__resource_name','venue__starttime','venue__endtime')
+
             for e in events: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
-            return events
+            uniques = []
+            uniqueids = set([x['id'] for x in events])
+            for uid in uniqueids:
+                objs = [x for x in events if uid == x['id']]
+                d = objs[0]
+                for o in objs:
+                    d['venue__resource__resource_name'] += (", " + o['venue__resource__resource_name'])
+                uniques.append(d)
+            return uniques
 
 class dashboard(ListView):
     model = EventsList
@@ -45,9 +54,17 @@ class dashboard(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date')
+        events = EventsList.objects.values('id', 'eventname', 'description', 'venue__date', 'venue__resource__resource_name')
         for e in events: e['venue__date'] = e['venue__date'].strftime('%Y-%m-%d')
-        return events
+        uniques = []
+        uniqueids = set([x['id'] for x in events])
+        for uid in uniqueids:
+            objs = [x for x in events if uid == x['id']]
+            d = objs[0]
+            for o in objs:
+                d['venue__resource__resource_name'] += (", " + o['venue__resource__resource_name'])
+            uniques.append(d)
+        return uniques
 
 
 

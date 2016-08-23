@@ -45,7 +45,7 @@ class EventRegistrationForm(forms.Form):
     branch=forms.ChoiceField(choices=[('CSE','CSE'),('IT','IT'),('ECE','ECE'),('EEE','EEE')])
     section=forms.ChoiceField(choices=[('A','A'),('B','B'),('both','both')])
     date=forms.DateField()
-    venue = forms.ModelChoiceField(queryset=Resources.objects.all())
+    venue = forms.ModelMultipleChoiceField(queryset=Resources.objects.all(),widget=forms.SelectMultiple)
     starttime=forms.TimeField()
     endtime=forms.TimeField()
 
@@ -59,7 +59,7 @@ class UpdateEventForm(forms.Form):
     branch = forms.ChoiceField(choices=[('CSE', 'CSE'), ('IT', 'IT'), ('ECE', 'ECE'), ('EEE', 'EEE')])
     section = forms.ChoiceField(choices=[('A', 'A'), ('B', 'B'), ('both', 'both')])
     date = forms.DateField()
-    venue = forms.ModelChoiceField(queryset=Resources.objects.all())
+    venue = forms.ModelMultipleChoiceField(queryset=Resources.objects.all(), widget=forms.SelectMultiple)
     starttime = forms.TimeField()
     endtime = forms.TimeField()
 
@@ -80,6 +80,6 @@ class UpdateEventForm1(forms.ModelForm):
         self.fields['branch'] = forms.ChoiceField(choices=[('CSE', 'CSE'), ('IT', 'IT'), ('ECE', 'ECE'), ('EEE', 'EEE')])
         self.fields['section'] = forms.ChoiceField(choices=[('A', 'A'), ('B', 'B'), ('both', 'both')])
         self.fields['date'] = forms.DateField()
-        self.fields['venue'] = forms.ModelChoiceField(queryset=Resources.objects.all())
+        self.fields['venue'] = forms.ModelMultipleChoiceField(queryset=Resources.objects.all(),widget=forms.SelectMultiple)
         self.fields['starttime'] = forms.TimeField()
         self.fields['endtime'] = forms.TimeField()
